@@ -4,8 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#27ae60">
-  <title>Animal Friends - बच्चों के लिए</title>
-  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Animal Friends</title>
+  
+  <!-- Simple icon using emoji (no extra file needed) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦁</text></svg>">
+  
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; }
     body { background: linear-gradient(135deg, #a8e6cf, #dcedc1, #ffd3b6, #ffaaa5); min-height: 100vh; padding: 20px; color: #333; }
@@ -28,7 +33,7 @@
 </head>
 <body>
 
-  <h1> Animal Friends </h1>
+  <h1>Animal Friends</h1>
   <p class="subtitle">जानवर पर टैप करो, वो खुद बोलेगा!</p>
 
   <div class="animals-grid" id="grid"></div>
@@ -36,11 +41,9 @@
   <div class="detail-view" id="detail">
     <div class="detail-emoji" id="detail-emoji"></div>
     <div class="detail-name" id="detail-name"></div>
-    
     <div class="feature"><strong>कहाँ रहता है:</strong> <span id="habitat"></span></div>
     <div class="feature"><strong>क्या खाता है:</strong> <span id="food"></span></div>
     <div class="feature"><strong>मज़ेदार बात:</strong> <span id="fact"></span></div>
-
     <button class="sound-btn" onclick="speakAgain()">🔊 फिर से सुनो</button>
     <br>
     <button class="back-btn" onclick="showGrid()">← वापस जाएं</button>
@@ -48,158 +51,52 @@
 
   <script>
     const animals = [
-      {
-        name: "शेर",
-        emoji: "🦁",
-        habitat: "अफ्रीका के जंगलों में",
-        food: "मांस (जेब्रा, हिरण)",
-        fact: "शेर झुंड में रहते हैं जिसे प्राइड कहते हैं!",
-        speech: "नमस्ते दोस्तों! मैं शेर हूँ। मैं अफ्रीका के जंगल में रहता हूँ। मैं मांस खाता हूँ। मैं बहुत ताकतवर हूँ और जोर से दहाड़ता हूँ। रोअर!"
-      },
-      {
-        name: "हाथी",
-        emoji: "🐘",
-        habitat: "अफ्रीका और एशिया में",
-        food: "पत्ते, घास, फल",
-        fact: "हाथी कभी कुछ नहीं भूलते!",
-        speech: "नमस्ते दोस्तों! मैं हाथी हूँ। मैं अफ्रीका और एशिया में रहता हूँ। मैं पत्ते और फल खाता हूँ। मेरी सूंड बहुत लंबी है और मैं बहुत याददाश्त वाला हूँ।"
-      },
-      {
-        name: "जिराफ",
-        emoji: "🦒",
-        habitat: "अफ्रीका के मैदानों में",
-        food: "ऊँचे पेड़ों के पत्ते",
-        fact: "दुनिया का सबसे लंबा जानवर!",
-        speech: "नमस्ते दोस्तों! मैं जिराफ हूँ। मैं अफ्रीका के खुले मैदानों में रहता हूँ। मैं ऊँचे पेड़ों के पत्ते खाता हूँ। मेरी गर्दन बहुत लंबी है!"
-      },
-      {
-        name: "पेंगुइन",
-        emoji: "🐧",
-        habitat: "अंटार्कटिका की ठंड में",
-        food: "मछली",
-        fact: "उड़ नहीं सकते लेकिन बहुत अच्छे तैराक हैं!",
-        speech: "नमस्ते दोस्तों! मैं पेंगुइन हूँ। मैं बहुत ठंडी जगह अंटार्कटिका में रहता हूँ। मैं मछली खाता हूँ। मैं उड़ नहीं सकता लेकिन पानी में बहुत तेज़ तैरता हूँ।"
-      },
-      {
-        name: "डॉल्फिन",
-        emoji: "🐬",
-        habitat: "समुद्र में",
-        food: "मछली",
-        fact: "बहुत होशियार और खेलने वाली!",
-        speech: "नमस्ते दोस्तों! मैं डॉल्फिन हूँ। मैं समुद्र में रहती हूँ। मैं मछली खाती हूँ। मैं बहुत होशियार हूँ और कूद-कूद कर खेलती हूँ।"
-      },
-      {
-        name: "कुत्ता",
-        emoji: "🐶",
-        habitat: "घरों में लोगों के साथ",
-        food: "कुत्ते का खाना और ट्रीट्स",
-        fact: "इंसान का सबसे अच्छा दोस्त!",
-        speech: "नमस्ते दोस्तों! मैं कुत्ता हूँ। मैं घरों में लोगों के साथ रहता हूँ। मैं वफादार हूँ और बहुत प्यार करता हूँ। भौं भौं!"
-      },
-      {
-        name: "बिल्ली",
-        emoji: "🐱",
-        habitat: "घरों में",
-        food: "बिल्ली का खाना और मछली",
-        fact: "खुश होने पर गुर्र-गुर्र करती है!",
-        speech: "नमस्ते दोस्तों! मैं बिल्ली हूँ। मैं घरों में रहती हूँ। मैं नरम हूँ और म्याऊँ म्याऊँ करती हूँ। जब मुझे प्यार मिलता है तो मैं गुर्र-गुर्र करती हूँ।"
-      },
-      {
-        name: "तितली",
-        emoji: "🦋",
-        habitat: "बगീचों में",
-        food: "फूलों का रस",
-        fact: "पहले केटरपिलर होती है!",
-        speech: "नमस्ते दोस्तों! मैं तितली हूँ। मैं बगீचों में रहती हूँ। मैं फूलों का रस पीती हूँ। पहले मैं केटरपिलर थी, फिर मैं सुंदर तितली बन गई।"
-      },
-      {
-        name: "मेंढक",
-        emoji: "🐸",
-        habitat: "तालाब और पानी के पास",
-        food: "कीड़े-मकोड़े",
-        fact: "बहुत दूर तक कूद सकता है!",
-        speech: "नमस्ते दोस्तों! मैं मेंढक हूँ। मैं तालाब के पास रहता हूँ। मैं कीड़े खाता हूँ। मैं बहुत ऊँचा और दूर तक कूद सकता हूँ। टर्र टर्र!"
-      },
-      {
-        name: "भालू",
-        emoji: "🐻",
-        habitat: "जंगलों में",
-        food: "जामुन, मछली, शहद",
-        fact: "सर्दियों में सो जाता है!",
-        speech: "नमस्ते दोस्तों! मैं भालू हूँ। मैं जंगल में रहता हूँ। मैं जामुन, मछली और शहद बहुत पसंद करता हूँ। सर्दियों में मैं लंबी नींद सो जाता हूँ।"
-      },
-      {
-        name: "बंदर",
-        emoji: "🐵",
-        habitat: "पेड़ों और जंगलों में",
-        food: "फल और पत्ते",
-        fact: "बहुत चंचल और चतुर!",
-        speech: "नमस्ते दोस्तों! मैं बंदर हूँ। मैं पेड़ों पर रहता हूँ। मैं फल खाता हूँ। मैं बहुत चंचल हूँ और पेड़ों पर कूद-फांद करता हूँ। ऊऊ ऊऊ आँ आँ!"
-      },
-      {
-        name: "उल्लू",
-        emoji: "🦉",
-        habitat: "जंगलों में",
-        food: "चूहे",
-        fact: "गर्दन लगभग पूरा घुमा सकता है!",
-        speech: "नमस्ते दोस्तों! मैं उल्लू हूँ। मैं जंगल में रहता हूँ। मैं रात को निकलता हूँ और चूहे पकड़ता हूँ। मैं अपनी गर्दन लगभग पूरा घुमा सकता हूँ। हू हू!"
-      }
+      { name: "शेर", emoji: "🦁", habitat: "अफ्रीका के जंगलों में", food: "मांस (जेब्रा, हिरण)", fact: "शेर झुंड में रहते हैं जिसे प्राइड कहते हैं!", speech: "नमस्ते दोस्तों! मैं शेर हूँ। मैं अफ्रीका के जंगल में रहता हूँ। मैं मांस खाता हूँ। मैं बहुत ताकतवर हूँ और जोर से दहाड़ता हूँ। रोअर!" },
+      { name: "हाथी", emoji: "🐘", habitat: "अफ्रीका और एशिया में", food: "पत्ते, घास, फल", fact: "हाथी कभी कुछ नहीं भूलते!", speech: "नमस्ते दोस्तों! मैं हाथी हूँ। मैं अफ्रीका और एशिया में रहता हूँ। मैं पत्ते और फल खाता हूँ। मेरी सूंड बहुत लंबी है।" },
+      { name: "जिराफ", emoji: "🦒", habitat: "अफ्रीका के मैदानों में", food: "ऊँचे पेड़ों के पत्ते", fact: "दुनिया का सबसे लंबा जानवर!", speech: "नमस्ते दोस्तों! मैं जिराफ हूँ। मैं अफ्रीका के खुले मैदानों में रहता हूँ। मैं ऊँचे पेड़ों के पत्ते खाता हूँ। मेरी गर्दन बहुत लंबी है!" },
+      { name: "पेंगुइन", emoji: "🐧", habitat: "अंटार्कटिका की ठंड में", food: "मछली", fact: "उड़ नहीं सकते लेकिन बहुत अच्छे तैराक हैं!", speech: "नमस्ते दोस्तों! मैं पेंगुइन हूँ। मैं बहुत ठंडी जगह अंटार्कटिका में रहता हूँ। मैं मछली खाता हूँ।" },
+      { name: "डॉल्फिन", emoji: "🐬", habitat: "समुद्र में", food: "मछली", fact: "बहुत होशियार और खेलने वाली!", speech: "नमस्ते दोस्तों! मैं डॉल्फिन हूँ। मैं समुद्र में रहती हूँ। मैं मछली खाती हूँ। मैं बहुत होशियार हूँ।" },
+      { name: "कुत्ता", emoji: "🐶", habitat: "घरों में लोगों के साथ", food: "कुत्ते का खाना", fact: "इंसान का सबसे अच्छा दोस्त!", speech: "नमस्ते दोस्तों! मैं कुत्ता हूँ। मैं घरों में लोगों के साथ रहता हूँ। मैं वफादार हूँ। भौं भौं!" },
+      { name: "बिल्ली", emoji: "🐱", habitat: "घरों में", food: "बिल्ली का खाना", fact: "खुश होने पर गुर्र-गुर्र करती है!", speech: "नमस्ते दोस्तों! मैं बिल्ली हूँ। मैं घरों में रहती हूँ। मैं म्याऊँ म्याऊँ करती हूँ।" },
+      { name: "तितली", emoji: "🦋", habitat: "बगीचों में", food: "फूलों का रस", fact: "पहले केटरपिलर होती है!", speech: "नमस्ते दोस्तों! मैं तितली हूँ। मैं बगीचों में रहती हूँ। मैं फूलों का रस पीती हूँ।" },
+      { name: "मेंढक", emoji: "🐸", habitat: "तालाब के पास", food: "कीड़े", fact: "बहुत दूर तक कूद सकता है!", speech: "नमस्ते दोस्तों! मैं मेंढक हूँ। मैं तालाब के पास रहता हूँ। टर्र टर्र!" },
+      { name: "भालू", emoji: "🐻", habitat: "जंगलों में", food: "जामुन, मछली, शहद", fact: "सर्दियों में सो जाता है!", speech: "नमस्ते दोस्तों! मैं भालू हूँ। मैं जंगल में रहता हूँ। मुझे शहद बहुत पसंद है।" },
+      { name: "बंदर", emoji: "🐵", habitat: "पेड़ों पर", food: "फल", fact: "बहुत चंचल!", speech: "नमस्ते दोस्तों! मैं बंदर हूँ। मैं पेड़ों पर रहता हूँ। ऊऊ ऊऊ आँ आँ!" },
+      { name: "उल्लू", emoji: "🦉", habitat: "जंगलों में", food: "चूहे", fact: "गर्दन घुमा सकता है!", speech: "नमस्ते दोस्तों! मैं उल्लू हूँ। मैं जंगल में रहता हूँ। हू हू!" }
     ];
 
     let currentAnimal = null;
 
-    // कार्ड बनाओ
     const grid = document.getElementById('grid');
     animals.forEach((animal, index) => {
       const card = document.createElement('div');
       card.className = 'animal-card';
-      card.innerHTML = `
-        <span class="animal-emoji">${animal.emoji}</span>
-        <div class="animal-name">${animal.name}</div>
-      `;
+      card.innerHTML = `<span class="animal-emoji">${animal.emoji}</span><div class="animal-name">${animal.name}</div>`;
       card.onclick = () => showDetail(index);
       grid.appendChild(card);
     });
 
     function showDetail(index) {
-      // पहले वाली आवाज़ बंद करो
       window.speechSynthesis.cancel();
-
       currentAnimal = animals[index];
       document.getElementById('detail-emoji').textContent = currentAnimal.emoji;
       document.getElementById('detail-name').textContent = currentAnimal.name;
       document.getElementById('habitat').textContent = currentAnimal.habitat;
       document.getElementById('food').textContent = currentAnimal.food;
       document.getElementById('fact').textContent = currentAnimal.fact;
-
       document.getElementById('grid').classList.add('hidden');
       document.querySelector('.subtitle').classList.add('hidden');
       document.getElementById('detail').style.display = 'block';
-
-      // अपने आप बोलना शुरू करो
-      setTimeout(() => {
-        speakAnimal();
-      }, 300);
+      setTimeout(() => speakAnimal(), 400);
     }
 
     function speakAnimal() {
       if (!currentAnimal) return;
-
       window.speechSynthesis.cancel();
-
       const utterance = new SpeechSynthesisUtterance(currentAnimal.speech);
       utterance.lang = 'hi-IN';
-      utterance.rate = 0.9;
+      utterance.rate = 0.88;
       utterance.pitch = 1.1;
-      utterance.volume = 1;
-
-      // हिंदी आवाज़ ढूंढो
-      const voices = window.speechSynthesis.getVoices();
-      const hindiVoice = voices.find(v => v.lang.includes('hi') || v.name.includes('Hindi'));
-      if (hindiVoice) {
-        utterance.voice = hindiVoice;
-      }
-
       window.speechSynthesis.speak(utterance);
     }
 
@@ -212,14 +109,6 @@
       document.getElementById('detail').style.display = 'none';
       document.getElementById('grid').classList.remove('hidden');
       document.querySelector('.subtitle').classList.remove('hidden');
-    }
-
-    // आवाज़ लोड करो
-    if (window.speechSynthesis) {
-      window.speechSynthesis.getVoices();
-      window.speechSynthesis.onvoiceschanged = () => {
-        window.speechSynthesis.getVoices();
-      };
     }
   </script>
 </body>
