@@ -1,309 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Animal Friends for Kids</title>
+  <meta name="theme-color" content="#27ae60">
+  <title>Animal Friends - बच्चों के लिए</title>
+  <link rel="manifest" href="manifest.json">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
-    }
-
-    body {
-      background: linear-gradient(135deg, #a8e6cf, #dcedc1, #ffd3b6, #ffaaa5);
-      min-height: 100vh;
-      padding: 20px;
-      color: #333;
-    }
-
-    h1 {
-      text-align: center;
-      font-size: 2.8rem;
-      color: #2c3e50;
-      margin-bottom: 10px;
-      text-shadow: 2px 2px 0 #fff;
-    }
-
-    .subtitle {
-      text-align: center;
-      font-size: 1.3rem;
-      margin-bottom: 30px;
-      color: #555;
-    }
-
-    .animals-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 20px;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .animal-card {
-      background: white;
-      border-radius: 25px;
-      padding: 20px 10px;
-      text-align: center;
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-      transition: all 0.3s ease;
-      border: 5px solid #fff;
-    }
-
-    .animal-card:hover {
-      transform: scale(1.08) rotate(2deg);
-      box-shadow: 0 12px 25px rgba(0,0,0,0.25);
-    }
-
-    .animal-emoji {
-      font-size: 4.5rem;
-      margin-bottom: 10px;
-      display: block;
-    }
-
-    .animal-name {
-      font-size: 1.4rem;
-      font-weight: bold;
-      color: #2c3e50;
-    }
-
-    /* Detail View */
-    .detail-view {
-      display: none;
-      max-width: 600px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 30px;
-      padding: 30px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-      text-align: center;
-      animation: popIn 0.4s ease;
-    }
-
-    @keyframes popIn {
-      from { transform: scale(0.7); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    .detail-emoji {
-      font-size: 7rem;
-      margin-bottom: 15px;
-    }
-
-    .detail-name {
-      font-size: 2.5rem;
-      color: #e74c3c;
-      margin-bottom: 20px;
-    }
-
-    .feature {
-      background: #f8f9fa;
-      border-radius: 20px;
-      padding: 15px 20px;
-      margin: 12px 0;
-      font-size: 1.3rem;
-      text-align: left;
-      border-left: 8px solid #3498db;
-    }
-
-    .feature strong {
-      color: #2980b9;
-    }
-
-    .sound-btn {
-      background: #27ae60;
-      color: white;
-      border: none;
-      padding: 18px 40px;
-      font-size: 1.6rem;
-      border-radius: 50px;
-      cursor: pointer;
-      margin: 20px 0 10px;
-      box-shadow: 0 8px 20px rgba(39, 174, 96, 0.4);
-      transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .sound-btn:hover {
-      background: #219653;
-      transform: scale(1.05);
-    }
-
-    .sound-btn:active {
-      transform: scale(0.98);
-    }
-
-    .back-btn {
-      background: #e74c3c;
-      color: white;
-      border: none;
-      padding: 15px 40px;
-      font-size: 1.4rem;
-      border-radius: 50px;
-      cursor: pointer;
-      margin-top: 15px;
-      box-shadow: 0 6px 15px rgba(231, 76, 60, 0.4);
-      transition: all 0.2s;
-    }
-
-    .back-btn:hover {
-      background: #c0392b;
-      transform: scale(1.05);
-    }
-
-    .hidden {
-      display: none !important;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; }
+    body { background: linear-gradient(135deg, #a8e6cf, #dcedc1, #ffd3b6, #ffaaa5); min-height: 100vh; padding: 20px; color: #333; }
+    h1 { text-align: center; font-size: 2.4rem; color: #2c3e50; margin-bottom: 8px; text-shadow: 2px 2px 0 #fff; }
+    .subtitle { text-align: center; font-size: 1.25rem; margin-bottom: 25px; color: #555; }
+    .animals-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; max-width: 1000px; margin: 0 auto; }
+    .animal-card { background: white; border-radius: 22px; padding: 18px 8px; text-align: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.15); transition: 0.25s; border: 5px solid #fff; }
+    .animal-card:active { transform: scale(0.95); }
+    .animal-emoji { font-size: 4.2rem; display: block; margin-bottom: 8px; }
+    .animal-name { font-size: 1.35rem; font-weight: bold; color: #2c3e50; }
+    .detail-view { display: none; max-width: 600px; margin: 0 auto; background: white; border-radius: 28px; padding: 28px 22px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); text-align: center; }
+    .detail-emoji { font-size: 6.5rem; margin-bottom: 12px; }
+    .detail-name { font-size: 2.3rem; color: #e74c3c; margin-bottom: 18px; }
+    .feature { background: #f8f9fa; border-radius: 18px; padding: 14px 18px; margin: 11px 0; font-size: 1.25rem; text-align: left; border-left: 8px solid #3498db; }
+    .feature strong { color: #2980b9; }
+    .sound-btn { background: #27ae60; color: white; border: none; padding: 16px 32px; font-size: 1.4rem; border-radius: 50px; cursor: pointer; margin: 16px 8px 8px; box-shadow: 0 6px 18px rgba(39,174,96,0.4); }
+    .back-btn { background: #e74c3c; color: white; border: none; padding: 14px 32px; font-size: 1.3rem; border-radius: 50px; cursor: pointer; margin-top: 10px; }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
   <h1> Animal Friends </h1>
-  <p class="subtitle">Tap an animal to learn about it!</p>
+  <p class="subtitle">जानवर पर टैप करो, वो खुद बोलेगा!</p>
 
-  <!-- Animal Grid -->
-  <div class="animals-grid" id="grid">
-    <!-- Cards added by JavaScript -->
-  </div>
+  <div class="animals-grid" id="grid"></div>
 
-  <!-- Detail View -->
   <div class="detail-view" id="detail">
     <div class="detail-emoji" id="detail-emoji"></div>
     <div class="detail-name" id="detail-name"></div>
     
-    <div class="feature"><strong> Where it lives:</strong> <span id="habitat"></span></div>
-    <div class="feature"><strong> What it eats:</strong> <span id="food"></span></div>
-    <div class="feature"><strong> Fun fact:</strong> <span id="fact"></span></div>
-    <div class="feature"><strong> Sound:</strong> <span id="sound"></span></div>
+    <div class="feature"><strong>कहाँ रहता है:</strong> <span id="habitat"></span></div>
+    <div class="feature"><strong>क्या खाता है:</strong> <span id="food"></span></div>
+    <div class="feature"><strong>मज़ेदार बात:</strong> <span id="fact"></span></div>
 
-    <button class="sound-btn" onclick="playSound()">
-      🔊 Hear the Sound!
-    </button>
-
+    <button class="sound-btn" onclick="speakAgain()">🔊 फिर से सुनो</button>
     <br>
-    <button class="back-btn" onclick="showGrid()">← Back to Animals</button>
+    <button class="back-btn" onclick="showGrid()">← वापस जाएं</button>
   </div>
 
   <script>
     const animals = [
       {
-        name: "Lion",
+        name: "शेर",
         emoji: "🦁",
-        habitat: "Grasslands in Africa",
-        food: "Meat (zebras, antelopes)",
-        fact: "Lions are the only cats that live in groups called prides!",
-        sound: "ROARRR!",
-        speak: "ROAR! ROAR!"
+        habitat: "अफ्रीका के जंगलों में",
+        food: "मांस (जेब्रा, हिरण)",
+        fact: "शेर झुंड में रहते हैं जिसे प्राइड कहते हैं!",
+        speech: "नमस्ते दोस्तों! मैं शेर हूँ। मैं अफ्रीका के जंगल में रहता हूँ। मैं मांस खाता हूँ। मैं बहुत ताकतवर हूँ और जोर से दहाड़ता हूँ। रोअर!"
       },
       {
-        name: "Elephant",
+        name: "हाथी",
         emoji: "🐘",
-        habitat: "Africa and Asia",
-        food: "Leaves, grass, fruits, and bark",
-        fact: "Elephants never forget and can live up to 70 years!",
-        sound: "TOOT! (with their trunk)",
-        speak: "Toot toot! Trumpet!"
+        habitat: "अफ्रीका और एशिया में",
+        food: "पत्ते, घास, फल",
+        fact: "हाथी कभी कुछ नहीं भूलते!",
+        speech: "नमस्ते दोस्तों! मैं हाथी हूँ। मैं अफ्रीका और एशिया में रहता हूँ। मैं पत्ते और फल खाता हूँ। मेरी सूंड बहुत लंबी है और मैं बहुत याददाश्त वाला हूँ।"
       },
       {
-        name: "Giraffe",
+        name: "जिराफ",
         emoji: "🦒",
-        habitat: "African savannas",
-        food: "Leaves from tall trees",
-        fact: "Giraffes are the tallest animals in the world!",
-        sound: "Quiet humming or snorts",
-        speak: "Hmmmm snort"
+        habitat: "अफ्रीका के मैदानों में",
+        food: "ऊँचे पेड़ों के पत्ते",
+        fact: "दुनिया का सबसे लंबा जानवर!",
+        speech: "नमस्ते दोस्तों! मैं जिराफ हूँ। मैं अफ्रीका के खुले मैदानों में रहता हूँ। मैं ऊँचे पेड़ों के पत्ते खाता हूँ। मेरी गर्दन बहुत लंबी है!"
       },
       {
-        name: "Penguin",
+        name: "पेंगुइन",
         emoji: "🐧",
-        habitat: "Cold places like Antarctica",
-        food: "Fish and krill",
-        fact: "Penguins can’t fly but they are amazing swimmers!",
-        sound: "Honk! Squawk!",
-        speak: "Honk honk! Squawk!"
+        habitat: "अंटार्कटिका की ठंड में",
+        food: "मछली",
+        fact: "उड़ नहीं सकते लेकिन बहुत अच्छे तैराक हैं!",
+        speech: "नमस्ते दोस्तों! मैं पेंगुइन हूँ। मैं बहुत ठंडी जगह अंटार्कटिका में रहता हूँ। मैं मछली खाता हूँ। मैं उड़ नहीं सकता लेकिन पानी में बहुत तेज़ तैरता हूँ।"
       },
       {
-        name: "Dolphin",
+        name: "डॉल्फिन",
         emoji: "🐬",
-        habitat: "Oceans all around the world",
-        food: "Fish and squid",
-        fact: "Dolphins are super smart and love to play!",
-        sound: "Click click whistle!",
-        speak: "Click click whistle!"
+        habitat: "समुद्र में",
+        food: "मछली",
+        fact: "बहुत होशियार और खेलने वाली!",
+        speech: "नमस्ते दोस्तों! मैं डॉल्फिन हूँ। मैं समुद्र में रहती हूँ। मैं मछली खाती हूँ। मैं बहुत होशियार हूँ और कूद-कूद कर खेलती हूँ।"
       },
       {
-        name: "Dog",
+        name: "कुत्ता",
         emoji: "🐶",
-        habitat: "Homes with people",
-        food: "Dog food, meat, and treats",
-        fact: "Dogs are humans’ best friends and love to play fetch!",
-        sound: "Woof! Woof!",
-        speak: "Woof woof! Woof!"
+        habitat: "घरों में लोगों के साथ",
+        food: "कुत्ते का खाना और ट्रीट्स",
+        fact: "इंसान का सबसे अच्छा दोस्त!",
+        speech: "नमस्ते दोस्तों! मैं कुत्ता हूँ। मैं घरों में लोगों के साथ रहता हूँ। मैं वफादार हूँ और बहुत प्यार करता हूँ। भौं भौं!"
       },
       {
-        name: "Cat",
+        name: "बिल्ली",
         emoji: "🐱",
-        habitat: "Homes and farms",
-        food: "Cat food, fish, and mice",
-        fact: "Cats purr when they are happy and can jump very high!",
-        sound: "Meow! Purrrr",
-        speak: "Meow! Meow! Purrrr"
+        habitat: "घरों में",
+        food: "बिल्ली का खाना और मछली",
+        fact: "खुश होने पर गुर्र-गुर्र करती है!",
+        speech: "नमस्ते दोस्तों! मैं बिल्ली हूँ। मैं घरों में रहती हूँ। मैं नरम हूँ और म्याऊँ म्याऊँ करती हूँ। जब मुझे प्यार मिलता है तो मैं गुर्र-गुर्र करती हूँ।"
       },
       {
-        name: "Butterfly",
+        name: "तितली",
         emoji: "🦋",
-        habitat: "Gardens and meadows",
-        food: "Nectar from flowers",
-        fact: "Butterflies start as tiny caterpillars and then change!",
-        sound: "Silent (they don’t make sound)",
-        speak: "Flutter flutter... silent wings"
+        habitat: "बगീचों में",
+        food: "फूलों का रस",
+        fact: "पहले केटरपिलर होती है!",
+        speech: "नमस्ते दोस्तों! मैं तितली हूँ। मैं बगீचों में रहती हूँ। मैं फूलों का रस पीती हूँ। पहले मैं केटरपिलर थी, फिर मैं सुंदर तितली बन गई।"
       },
       {
-        name: "Frog",
+        name: "मेंढक",
         emoji: "🐸",
-        habitat: "Ponds, lakes, and wet places",
-        food: "Insects and bugs",
-        fact: "Frogs can jump more than 20 times their body length!",
-        sound: "Ribbit! Ribbit!",
-        speak: "Ribbit! Ribbit! Ribbit!"
+        habitat: "तालाब और पानी के पास",
+        food: "कीड़े-मकोड़े",
+        fact: "बहुत दूर तक कूद सकता है!",
+        speech: "नमस्ते दोस्तों! मैं मेंढक हूँ। मैं तालाब के पास रहता हूँ। मैं कीड़े खाता हूँ। मैं बहुत ऊँचा और दूर तक कूद सकता हूँ। टर्र टर्र!"
       },
       {
-        name: "Bear",
+        name: "भालू",
         emoji: "🐻",
-        habitat: "Forests and mountains",
-        food: "Berries, fish, honey, and plants",
-        fact: "Bears sleep all winter in a den – that’s called hibernating!",
-        sound: "Grrrrowl!",
-        speak: "Grrrrrowl! Grrr!"
+        habitat: "जंगलों में",
+        food: "जामुन, मछली, शहद",
+        fact: "सर्दियों में सो जाता है!",
+        speech: "नमस्ते दोस्तों! मैं भालू हूँ। मैं जंगल में रहता हूँ। मैं जामुन, मछली और शहद बहुत पसंद करता हूँ। सर्दियों में मैं लंबी नींद सो जाता हूँ।"
       },
       {
-        name: "Monkey",
+        name: "बंदर",
         emoji: "🐵",
-        habitat: "Trees in jungles and forests",
-        food: "Fruits, leaves, and insects",
-        fact: "Monkeys are very playful and good at climbing!",
-        sound: "Ooh ooh aah aah!",
-        speak: "Ooh ooh aah aah! Ooh ooh!"
+        habitat: "पेड़ों और जंगलों में",
+        food: "फल और पत्ते",
+        fact: "बहुत चंचल और चतुर!",
+        speech: "नमस्ते दोस्तों! मैं बंदर हूँ। मैं पेड़ों पर रहता हूँ। मैं फल खाता हूँ। मैं बहुत चंचल हूँ और पेड़ों पर कूद-फांद करता हूँ। ऊऊ ऊऊ आँ आँ!"
       },
       {
-        name: "Owl",
+        name: "उल्लू",
         emoji: "🦉",
-        habitat: "Forests and trees",
-        food: "Mice and small animals",
-        fact: "Owls can turn their heads almost all the way around!",
-        sound: "Hoo! Hoo!",
-        speak: "Hoo hoo! Hoo hoo!"
+        habitat: "जंगलों में",
+        food: "चूहे",
+        fact: "गर्दन लगभग पूरा घुमा सकता है!",
+        speech: "नमस्ते दोस्तों! मैं उल्लू हूँ। मैं जंगल में रहता हूँ। मैं रात को निकलता हूँ और चूहे पकड़ता हूँ। मैं अपनी गर्दन लगभग पूरा घुमा सकता हूँ। हू हू!"
       }
     ];
 
     let currentAnimal = null;
 
-    // Create animal cards
+    // कार्ड बनाओ
     const grid = document.getElementById('grid');
     animals.forEach((animal, index) => {
       const card = document.createElement('div');
@@ -317,57 +162,59 @@
     });
 
     function showDetail(index) {
+      // पहले वाली आवाज़ बंद करो
+      window.speechSynthesis.cancel();
+
       currentAnimal = animals[index];
       document.getElementById('detail-emoji').textContent = currentAnimal.emoji;
       document.getElementById('detail-name').textContent = currentAnimal.name;
       document.getElementById('habitat').textContent = currentAnimal.habitat;
       document.getElementById('food').textContent = currentAnimal.food;
       document.getElementById('fact').textContent = currentAnimal.fact;
-      document.getElementById('sound').textContent = currentAnimal.sound;
 
       document.getElementById('grid').classList.add('hidden');
       document.querySelector('.subtitle').classList.add('hidden');
       document.getElementById('detail').style.display = 'block';
+
+      // अपने आप बोलना शुरू करो
+      setTimeout(() => {
+        speakAnimal();
+      }, 300);
+    }
+
+    function speakAnimal() {
+      if (!currentAnimal) return;
+
+      window.speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(currentAnimal.speech);
+      utterance.lang = 'hi-IN';
+      utterance.rate = 0.9;
+      utterance.pitch = 1.1;
+      utterance.volume = 1;
+
+      // हिंदी आवाज़ ढूंढो
+      const voices = window.speechSynthesis.getVoices();
+      const hindiVoice = voices.find(v => v.lang.includes('hi') || v.name.includes('Hindi'));
+      if (hindiVoice) {
+        utterance.voice = hindiVoice;
+      }
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function speakAgain() {
+      speakAnimal();
     }
 
     function showGrid() {
-      // Stop any speaking
-      if (window.speechSynthesis) {
-        window.speechSynthesis.cancel();
-      }
+      window.speechSynthesis.cancel();
       document.getElementById('detail').style.display = 'none';
       document.getElementById('grid').classList.remove('hidden');
       document.querySelector('.subtitle').classList.remove('hidden');
     }
 
-    function playSound() {
-      if (!currentAnimal || !window.speechSynthesis) {
-        alert("Sorry, sound is not available on this device.");
-        return;
-      }
-
-      // Stop previous speech
-      window.speechSynthesis.cancel();
-
-      const utterance = new SpeechSynthesisUtterance(currentAnimal.speak);
-      utterance.rate = 0.85;       // a bit slower for kids
-      utterance.pitch = 1.1;       // slightly higher and fun
-      utterance.volume = 1;
-
-      // Try to pick a nice voice if available
-      const voices = window.speechSynthesis.getVoices();
-      const preferred = voices.find(v => 
-        v.name.includes("Google") || 
-        v.name.includes("Samantha") || 
-        v.name.includes("Female") ||
-        v.lang.startsWith("en")
-      );
-      if (preferred) utterance.voice = preferred;
-
-      window.speechSynthesis.speak(utterance);
-    }
-
-    // Load voices (needed on some browsers)
+    // आवाज़ लोड करो
     if (window.speechSynthesis) {
       window.speechSynthesis.getVoices();
       window.speechSynthesis.onvoiceschanged = () => {
