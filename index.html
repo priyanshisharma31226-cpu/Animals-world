@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animal Friends for Kids</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #a8e6cf, #dcedc1, #ffd3b6, #ffaaa5);
+      min-height: 100vh;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.8rem;
+      color: #2c3e50;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 0 #fff;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+      color: #555;
+    }
+
+    .animals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .animal-card {
+      background: white;
+      border-radius: 25px;
+      padding: 20px 10px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+      border: 5px solid #fff;
+    }
+
+    .animal-card:hover {
+      transform: scale(1.08) rotate(2deg);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+    }
+
+    .animal-emoji {
+      font-size: 4.5rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .animal-name {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    /* Detail View */
+    .detail-view {
+      display: none;
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 30px;
+      padding: 30px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      text-align: center;
+      animation: popIn 0.4s ease;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .detail-emoji {
+      font-size: 7rem;
+      margin-bottom: 15px;
+    }
+
+    .detail-name {
+      font-size: 2.5rem;
+      color: #e74c3c;
+      margin-bottom: 25px;
+    }
+
+    .feature {
+      background: #f8f9fa;
+      border-radius: 20px;
+      padding: 15px 20px;
+      margin: 12px 0;
+      font-size: 1.3rem;
+      text-align: left;
+      border-left: 8px solid #3498db;
+    }
+
+    .feature strong {
+      color: #2980b9;
+    }
+
+    .back-btn {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      font-size: 1.4rem;
+      border-radius: 50px;
+      cursor: pointer;
+      margin-top: 25px;
+      box-shadow: 0 6px 15px rgba(231, 76, 60, 0.4);
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      background: #c0392b;
+      transform: scale(1.05);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <h1> Animal Friends </h1>
+  <p class="subtitle">Tap an animal to learn about it!</p>
+
+  <!-- Animal Grid -->
+  <div class="animals-grid" id="grid">
+    <!-- Cards will be added by JavaScript -->
+  </div>
+
+  <!-- Detail View -->
+  <div class="detail-view" id="detail">
+    <div class="detail-emoji" id="detail-emoji"></div>
+    <div class="detail-name" id="detail-name"></div>
+    
+    <div class="feature"><strong> Where it lives:</strong> <span id="habitat"></span></div>
+    <div class="feature"><strong> What it eats:</strong> <span id="food"></span></div>
+    <div class="feature"><strong> Fun fact:</strong> <span id="fact"></span></div>
+    <div class="feature"><strong> Sound:</strong> <span id="sound"></span></div>
+
+    <button class="back-btn" onclick="showGrid()">← Back to Animals</button>
+  </div>
+
+  <script>
+    const animals = [
+      {
+        name: "Lion",
+        emoji: "🦁",
+        habitat: "Grasslands in Africa",
+        food: "Meat (zebras, antelopes)",
+        fact: "Lions are the only cats that live in groups called prides!",
+        sound: "ROARRR!"
+      },
+      {
+        name: "Elephant",
+        emoji: "🐘",
+        habitat: "Africa and Asia",
+        food: "Leaves, grass, fruits, and bark",
+        fact: "Elephants never forget and can live up to 70 years!",
+        sound: "TOOT! (with their trunk)"
+      },
+      {
+        name: "Giraffe",
+        emoji: "🦒",
+        habitat: "African savannas",
+        food: "Leaves from tall trees",
+        fact: "Giraffes are the tallest animals in the world!",
+        sound: "Quiet humming or snorts"
+      },
+      {
+        name: "Penguin",
+        emoji: "🐧",
+        habitat: "Cold places like Antarctica",
+        food: "Fish and krill",
+        fact: "Penguins can’t fly but they are amazing swimmers!",
+        sound: "Honk! Squawk!"
+      },
+      {
+        name: "Dolphin",
+        emoji: "🐬",
+        habitat: "Oceans all around the world",
+        food: "Fish and squid",
+        fact: "Dolphins are super smart and love to play!",
+        sound: "Click click whistle!"
+      },
+      {
+        name: "Dog",
+        emoji: "🐶",
+        habitat: "Homes with people (and many places)",
+        food: "Dog food, meat, and treats",
+        fact: "Dogs are humans’ best friends and love to play fetch!",
+        sound: "Woof! Woof!"
+      },
+      {
+        name: "Cat",
+        emoji: "🐱",
+        habitat: "Homes and farms",
+        food: "Cat food, fish, and mice",
+        fact: "Cats purr when they are happy and can jump very high!",
+        sound: "Meow! Purrrr"
+      },
+      {
+        name: "Butterfly",
+        emoji: "🦋",
+        habitat: "Gardens and meadows",
+        food: "Nectar from flowers",
+        fact: "Butterflies start as tiny caterpillars and then change!",
+        sound: "Silent (they don’t make sound)"
+      },
+      {
+        name: "Frog",
+        emoji: "🐸",
+        habitat: "Ponds, lakes, and wet places",
+        food: "Insects and bugs",
+        fact: "Frogs can jump more than 20 times their body length!",
+        sound: "Ribbit! Ribbit!"
+      },
+      {
+        name: "Bear",
+        emoji: "🐻",
+        habitat: "Forests and mountains",
+        food: "Berries, fish, honey, and plants",
+        fact: "Bears sleep all winter in a den – that’s called hibernating!",
+        sound: "Grrrrowl!"
+      },
+      {
+        name: "Monkey",
+        emoji: "🐵",
+        habitat: "Trees in jungles and forests",
+        food: "Fruits, leaves, and insects",
+        fact: "Monkeys are very playful and good at climbing!",
+        sound: "Ooh ooh aah aah!"
+      },
+      {
+        name: "Owl",
+        emoji: "🦉",
+        habitat: "Forests and trees",
+        food: "Mice and small animals",
+        fact: "Owls can turn their heads almost all the way around!",
+        sound: "Hoo! Hoo!"
+      }
+    ];
+
+    // Create animal cards
+    const grid = document.getElementById('grid');
+    animals.forEach((animal, index) => {
+      const card = document.createElement('div');
+      card.className = 'animal-card';
+      card.innerHTML = `
+        <span class="animal-emoji">${animal.emoji}</span>
+        <div class="animal-name">${animal.name}</div>
+      `;
+      card.onclick = () => showDetail(index);
+      grid.appendChild(card);
+    });
+
+    function showDetail(index) {
+      const animal = animals[index];
+      document.getElementById('detail-emoji').textContent = animal.emoji;
+      document.getElementById('detail-name').textContent = animal.name;
+      document.getElementById('habitat').textContent = animal.habitat;
+      document.getElementById('food').textContent = animal.food;
+      document.getElementById('fact').textContent = animal.fact;
+      document.getElementById('sound').textContent = animal.sound;
+
+      document.getElementById('grid').classList.add('hidden');
+      document.querySelector('.subtitle').classList.add('hidden');
+      document.getElementById('detail').style.display = 'block';
+    }
+
+    function showGrid() {
+      document.getElementById('detail').style.display = 'none';
+      document.getElementById('grid').classList.remove('hidden');
+      document.querySelector('.subtitle').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
